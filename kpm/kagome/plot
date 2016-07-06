@@ -1,0 +1,14 @@
+#!/bin/bash
+#inputs: 1 is the number of dumpfile to use
+#inputs: 2 is the name of the matlab script to use
+echo "Plotting chirality for dump $1"
+tempfile="spins.csv"
+chiupdate="avg_chi.txt"
+dumpdir="dump"
+plotdir="plots"
+plotfile="$plotdir/plot$1"
+rm $tempfile
+rm $plotfile
+sed -n /spin/p $dumpdir/dump"$1".json | sed 's/"spin":\[//g' | sed 's/]//' >> $tempfile
+matcommand="$2('$tempfile','$plotfile','$chiupdate');exit"
+matlab -r $matcommand
