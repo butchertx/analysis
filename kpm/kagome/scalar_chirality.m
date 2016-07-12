@@ -70,7 +70,7 @@ figure()
 hold on
 colormap(redblue)
 [x,y,u,v] = quiver_kagome2D(a1,a2,Sij,L,L);
-quiver(x,y,u,v, .5);
+%quiver(x,y,u,v, .5);
 %fill triangles
 for i = 1:(L - 1)
 	for j = 1:(L - 1)
@@ -80,11 +80,20 @@ for i = 1:(L - 1)
 		xtri2 = [x(i,3*j + 3),x(i + 1, 3*j - 1),x(i + 1, 3*j + 1)];%sites 6,11,13 as above
 		ytri2 = [y(i,3*j + 3),y(i + 1, 3*j - 1),y(i + 1, 3*j + 1)];
 
+		xhex = [x(i,3*j -1), x(i, 3*j), x(i + 1, 3*j - 2), x(i + 1, 3*j - 1), x(i, 3*j + 3), x(i, 3*j + 1)];%hexagon
+		yhex = [y(i,3*j -1), y(i, 3*j), y(i + 1, 3*j - 2), y(i + 1, 3*j - 1), y(i, 3*j + 3), y(i, 3*j + 1)];%hexagon
+
 		chitri1 = chi(2*i - 1, j);
 		chitri2 = chi(2*i, j);
+		if(i ~= 1 && i ~= (L - 1) && j ~= 1 && j ~= (L-1))
+			chihex = (chitri1 + chitri2 + chi(2*i - 2, j) + chi(2*i + 1, j) + chi(2*i - 1, j + 1) + chi(2*i, j - 1))/6;
+		else
+			chihex = .5 * (chitri1 + chitri2);
+		end
 
 		fill(xtri1,ytri1,chitri1);
 		fill(xtri2,ytri2,chitri2);
+		fill(xhex, yhex, chihex);
 %{
 		if(chitri1 > 0)
 			fill(xtri1, ytri1, [(1-chitri1) (1-chitri1) chitri1]);

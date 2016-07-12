@@ -5,10 +5,12 @@ echo "Plotting chirality for dump $1"
 tempfile="spins.csv"
 chiupdate="avg_chi.txt"
 dumpdir="dump"
+dumpfile="$dumpdir/dump$1.json"
 plotdir="plots"
 plotfile="$plotdir/plot$1"
 rm $tempfile
 rm $plotfile
-sed -n /spin/p $dumpdir/dump"$1".json | sed 's/"spin":\[//g' | sed 's/]//' >> $tempfile
-matcommand="$2('$tempfile','$plotfile','$chiupdate');exit"
+echo $dumpfile
+sed -n /spin/p $dumpfile | sed 's/"spin":\[//g' | sed 's/]//' >> $tempfile
+matcommand="addpath('$KAGOME');$2('$tempfile','$plotfile','$chiupdate');exit"
 matlab -r $matcommand
