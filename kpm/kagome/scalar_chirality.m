@@ -13,7 +13,7 @@ function hello = scalar_chirality(infile, outfile, chifile)
 tic
 raw_spins = csvread(infile);
 spins = split_spins(raw_spins);%this is now a cell array of 3 3-vectors at each site
-N = length(spins)%number of sites
+N = length(spins);%number of sites
 L = sqrt(N);%length of each dimension
 a1 = [1, 0];
 a2 = [.5, sqrt(3)/2];
@@ -39,10 +39,10 @@ for x = 1:(L - 1)
 		triangle2 = Sij{x + 1, y};%456 - we need 6
 		triangle3 = Sij{x, y + 1};%10,11,12 - we need 11
 		triangle4 = Sij{x + 1, y + 1};%13,14,15 - we need 13
-    		%first triangle
-    		chi(2*x - 1, y) = dot(triangle1{1}, cross(triangle1{2}, triangle1{3}));
-    		%second triangle
-    		chi(2*x, y) = dot(triangle2{3}, cross(triangle3{2}, triangle4{1}));
+        %first triangle
+        chi(2*x - 1, y) = dot(triangle1{1}, cross(triangle1{2}, triangle1{3}));
+        %second triangle
+        chi(2*x, y) = dot(triangle2{3}, cross(triangle4{1}, triangle3{2}));
   	end
 end
 %the points will be xval, yval, chirality, where xval,yval gives the leftmost corner of the triangle
@@ -61,8 +61,8 @@ avg_chi = sum(sum(chi))/(dims(1)*dims(2));
 chi_max = max(max(abs(chi)));
 %chi = chi / chi_max;%now chi takes values between -1 and 1 (for color mapping)
 
-chi_out = fopen(chifile, 'w');
-fprintf(chi_out, '%f', avg_chi);
+chi_out = fopen(chifile, 'a');
+fprintf(chi_out, '%f , ', avg_chi);
 fclose(chi_out);
 
 %create a quiver plot for the spins at each site
@@ -94,18 +94,6 @@ for i = 1:(L - 1)
 		fill(xtri1,ytri1,chitri1);
 		fill(xtri2,ytri2,chitri2);
 		fill(xhex, yhex, chihex);
-%{
-		if(chitri1 > 0)
-			fill(xtri1, ytri1, [(1-chitri1) (1-chitri1) chitri1]);
-		else 
-			fill(xtri1, ytri1, [abs(chitri1) (1+chitri1) (1+chitri1)]);
-		end
-		if(chitri2 > 0)
-			fill(xtri2, ytri2, [(1-chitri2) (1-chitri2) chitri2]);
-		else 
-			fill(xtri2, ytri2, [abs(chitri2) (1+chitri2) (1+chitri2)]);
-		end
-%}
 	end
 end
 saveas(gcf,strcat(outfile,'.fig'))
