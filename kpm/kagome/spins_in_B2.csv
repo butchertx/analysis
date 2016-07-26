@@ -1,14 +1,14 @@
 Kagome,,,
-Dimensions, 3, 3,
+Dimensions, 64, 64,
 Sublattice A,,,
 delta1,0,0,1
-delta2,,,
-delta3,0,1,0
+delta2,1,0,0
+delta3,,,
 Sublattice B,,,
 delta1,0,0,-1
-delta2,-1,0,0
-delta3,,,
+delta2,,,
+delta3,0,-1,0
 Sublattice C,,,
 delta1,,,
-delta2,1,0,0
-delta3,0,-1,0
+delta2,-1,0,0
+delta3,0,1,0

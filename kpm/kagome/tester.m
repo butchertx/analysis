@@ -1,6 +1,6 @@
 %Run test functions from matlab window
-defspins_infile = 'spins_in_test.csv';
-defspins_outfile = 'spins_out_test.csv';
+defspins_infile = 'spins_in_B2.csv';
+defspins_outfile = 'spins_read_B2.csv';
 a1 = [1, 0];
 a2 = [.5, sqrt(3)/2];
 [Lx, Ly] = def_spins(defspins_infile, defspins_outfile);
@@ -14,9 +14,11 @@ for j = 1:Lx
   end
 end
 
-[x,y,z,u,v,w] = quiver_kagome_3D_planar(a1, a2, Sij, Lx, Ly);
-quiver3(x,y,z,u,v,w,.5)
+% [x,y,z,u,v,w] = quiver_kagome_3D_planar(a1, a2, Sij, Lx, Ly);
+% quiver3(x,y,z,u,v,w,.5)
+% 
+% scalar_chirality(defspins_outfile, 'defspins_testplot', 'avg_chi.csv');
+% 
+% vector_chirality(defspins_outfile, 'defspins_vectestplot', 'avg_chi_vec.csv');
 
-scalar_chirality(defspins_outfile, 'defspins_testplot', 'avg_chi.csv');
-
-vector_chirality(defspins_outfile, 'defspins_vectestplot', 'avg_chi_vec.csv');
+struct_fact(Lx, Ly, defspins_outfile, 'struct_fact_testplot');

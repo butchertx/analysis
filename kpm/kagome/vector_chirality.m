@@ -37,8 +37,8 @@ for x = 1:(L - 1)
     for y = 1:(L - 1)
 		%need to retrieve spins from 4 different triangles:
 		triangle1 = Sij{x,y};%123
-		triangle2 = Sij{x + 1, y};%456 - we need 6
-		triangle3 = Sij{x, y + 1};%10,11,12 - we need 11
+		triangle2 = Sij{x, y + 1};%456 - we need 6
+		triangle3 = Sij{x + 1, y};%10,11,12 - we need 11
 		triangle4 = Sij{x + 1, y + 1};%13,14,15 - we need 13
         %first triangle
         chi{2*x - 1, y} = cross(triangle1{1}, triangle1{2}) + cross(triangle1{2}, triangle1{3}) + cross(triangle1{3}, triangle1{1});
